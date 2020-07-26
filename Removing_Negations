@@ -1,0 +1,13 @@
+my_negative_words=["no","not","don't","doesn't",
+                   "never","didn't","can't"]
+
+my_string=input("Enter your Senteance:")
+mynewstring = my_string.split()
+
+for i in range(len(my_negative_words)):
+    for j in range(len(mynewstring)):
+        if (my_negative_words[i].upper()==(mynewstring[j]).upper()):
+            mynewstring.remove(mynewstring[j])
+            break
+for i in mynewstring:
+    print(i,end=" ")
