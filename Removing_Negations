@@ -1,13 +1,419 @@
-my_negative_words=["no","not","don't","doesn't",
-                   "never","didn't","can't"]
+User_data.py
 
-my_string=input("Enter your Senteance:")
-mynewstring = my_string.split()
+###***************sign up*******************####
 
-for i in range(len(my_negative_words)):
-    for j in range(len(mynewstring)):
-        if (my_negative_words[i].upper()==(mynewstring[j]).upper()):
-            mynewstring.remove(mynewstring[j])
+#user name:
+
+def getusername():
+    username=input("Enter name:")
+    return username
+
+
+#Emali
+def getEmail():
+    while True:
+        email = input("Enter Email:")
+        if email.endswith("@gmail.com"):
+          return email
+        else:
+            print("plz Enter valid Email address!!!")
+
+#password:
+def getPassword():
+    password=input("Enter password:")
+    return password
+
+def getRepassword():
+    repass=input("Enter RE_Password:")
+    return repass
+
+
+def getFinaliPass():
+
+    while True:
+        pass1=getPassword()
+        pass2=getRepassword()
+        if pass1==pass2:
+            return pass2
+        else:
+            print("plz Enter Valid password!")
+
+
+####______________student requried  data_________________#####
+
+
+
+##studetn id
+def getId():
+    id=int(input("Enter  student id:"))
+    return id
+
+
+##stduent name
+
+def getName():
+    name=input("Enter student name:")
+    return name
+
+#email
+
+ 
+
+ 
+
+ 
+
+ 
+
+User_Sing_up.py
+ 
+##**********sign up ***************************
+
+import Student_management.user_data as user
+
+
+
+user_signup={}
+
+
+
+def signup():
+
+    user_signup["name"]=user.getusername()
+
+    user_signup["email"]=user.getEmail()
+
+    user_signup["password"]=user.getFinaliPass()
+
+    print("user  registered successfully!!!")
+
+    print(user_signup)
+ 
+ 
+ 
+ 
+ 
+ 
+User_login.py
+ 
+###***************user Login**************************
+
+import Student_management.sign_up as signup
+
+import Student_management.user_data as user
+
+import Student_management.Student_Desk as desk
+
+
+
+def login():
+
+    signup.signup()
+
+    while True:
+
+        username = user.getusername()
+
+        password = user.getPassword()
+
+        if username==signup.user_signup["name"] and password==signup.user_signup["password"]:
+
+            print("user login successfully!!!")
+
+            desk.StudentDesk()
+
             break
-for i in mynewstring:
-    print(i,end=" ")
+
+
+
+        else:
+
+            print("username or password is incorrect!!!")
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Add_student_detail.py
+##add student details*****
+
+import Student_management.user_data as user
+
+Student_Database={}
+
+
+
+def addStudent_Details():
+
+    print("************Welcome to Add Details Desk***************************")
+
+    num=int(input("How many student data you want to Enter:"))
+
+    while num>0:
+
+        student={}
+
+        student["id"]=user.getId()
+
+        student["name"]=user.getName()
+
+        student["email"]=user.getEmail()
+
+
+
+        Student_Database[num]=student
+
+        print("data inserted successfully!")
+
+        print(Student_Database)
+
+        num=num-1
+
+
+
+
+
+
+
+ 
+View_Studnet_details.py
+import Student_management.add_student_details as add
+
+
+
+
+
+def ViewData():
+
+    print("************My Data Base*****************************")
+
+    print("id","\t\t\t\t\t\t","Name","\t\t\t\t\t\t","Email")
+
+    for i in  add.Student_Database.keys():
+
+        print("{}\t\t\t\t\t\t{}\t\t\t\t\t\t{}".format(add.Student_Database[i]["id"],add.Student_Database[i]["name"],add.Student_Database[i]["email"]))
+
+
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Update_student_details.py
+import Student_management.add_student_details as add
+
+import Student_management.View_StudentData as view
+
+import Student_management.user_data as user
+
+
+
+def updateStudent():
+
+    print("******_________Welcome to Update Desk___________*****************")
+
+    view.ViewData()
+
+    while True:
+
+         id=int(input("Enter student id which you want to update!:"))
+
+         for i in add.Student_Database.keys():
+
+             if add.Student_Database[i]["id"]==id:
+
+                 print("student found!!!")
+
+                 print(add.Student_Database[i]["name"])
+
+                 print(add.Student_Database[i]["email"])
+
+                 print("**_________update details______***")
+
+                 newName=user.getName()
+
+                 newEnail=user.getEmail()
+
+                 add.Student_Database[i]["name"]=newName
+
+                 add.Student_Database[i]["email"]=newEnail
+
+                 print("data Updated Successfully!!!")
+
+                 print("**__________my updated Data base___________**")
+
+                 view.ViewData()
+
+                 return
+
+             else:
+
+                 print("Student not found plz try again!")
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+delete_student_details.py
+import Student_management.add_student_details as add
+
+import  Student_management.View_StudentData as view
+
+
+
+
+
+def DeletStudent():
+
+    print("***_____________Welcome to Delete Desk__________________*****")
+
+    view.ViewData()
+
+
+
+    while True:
+
+        id=int(input("Enter Student id which you want to delete:"))
+
+        for i  in add.Student_Database.keys():
+
+            if add.Student_Database[i]["id"]==id:
+
+                print("data is present!")
+
+                del add.Student_Database[i]
+
+                print("___Student data deleted successfully_______")
+
+                view.ViewData()
+
+                return
+
+            else:
+
+                print("Student not found plz try again!!!")
+ 
+ 
+
+ 
+
+ 
+
+Student_desk.py
+ 
+import Student_management.add_student_details as add
+
+import  Student_management.View_StudentData as view
+
+import  Student_management.update_student as update
+
+import  Student_management.Delete_student as delete
+
+def StudentDesk():
+
+    print("***********______________WELCOME TO STUDENT DESK_____________***********")
+
+    while True:
+
+        print("1.ADD STUDENT DETAILS...\n"
+
+              "2.VIEW STUDENT DETAILS...\n"
+
+              "3.UPDATE STUDENT DETAILS...\n"
+
+              "4.DELETE STUDENT DETAILS...")
+
+        choice=int(input("Enter your choice:"))
+
+        if choice==1:
+
+            add.addStudent_Details()
+
+        elif choice==2:
+
+            view.ViewData()
+
+        elif choice==3:
+
+            update.updateStudent()
+
+        elif choice==4:
+
+            delete.DeletStudent()
+
+        else:
+
+            print("plz Enter valid choice")
+
+        yes=input("do you want to continue!(yes/no):")
+
+        if yes=="no":
+
+            break
+ 
+ 
+welcome.py
+import Student_management.user_login as login
+
+
+
+
+
+def welcome():
+
+    login.login()
+
+
+
+welcome()
